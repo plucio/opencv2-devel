@@ -6,7 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - devel
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,10 +35,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
-        id: docker_build
+        name: Build and push dev
+        id: docker_build_dev
         uses: docker/build-push-action@v2
         with:
           push: true
+          target: opencv-2.4-devel
           tags: plucio/opencv:2.4.13.7.2-bullseye-dev,plucio/opencv:2.4.13-bullseye-dev,plucio/opencv:2.4-bullseye-dev
           platforms: linux/amd64,linux/arm64
+          cache-from: type=registry,ref=user/app:latest
+          cache-to: type=inline
+      -
+        name: Build and push runtime
+        id: docker_build_runtime
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          target: opencv-2.4-runtime
+          tags: plucio/opencv:2.4.13.7.2-bullseye-runtime,plucio/opencv:2.4.13-bullseye-runtime,plucio/opencv:2.4-bullseye-runtime
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=registry,ref=user/app:latest
+          cache-to: type=inline
