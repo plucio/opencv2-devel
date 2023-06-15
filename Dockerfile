@@ -1,4 +1,4 @@
-FROM docker.io/library/debian:bullseye-slim AS opencv-2.4-devel
+FROM docker.io/library/ubuntu:jammy AS opencv-2.4-devel
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
@@ -19,14 +19,14 @@ ENV OPENCV_SRC_DIR="/usr/local/src/opencv"
 RUN git clone --depth 1 --branch 2.4.13.7 https://github.com/opencv/opencv.git ${OPENCV_SRC_DIR} \
     && mkdir ${OPENCV_SRC_DIR}/build \
     && cd ${OPENCV_SRC_DIR}/build \
-    && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
-    && make \
+    && cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_CXX_STANDARD=11 .. \
+    && make -j 3\
     && make install \
     && rm -rf ${OPENCV_SRC_DIR}
 
 
 ######################################################################
-FROM docker.io/library/debian:bullseye-slim AS opencv-2.4-runtime
+FROM docker.io/library/ubuntu:jammy AS opencv-2.4-runtime
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \

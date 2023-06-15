@@ -41,7 +41,7 @@ jobs:
         with:
           push: true
           target: opencv-2.4-devel
-          tags: plucio/opencv:2.4.13.7.3-bullseye-dev,plucio/opencv:2.4.13-bullseye-dev,plucio/opencv:2.4-bullseye-dev
+          tags: plucio/opencv:2.4.13.7.3-jammy-dev,plucio/opencv:2.4.13-jammy-dev,plucio/opencv:2.4-jammy-dev
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
@@ -52,7 +52,7 @@ jobs:
         with:
           push: true
           target: opencv-2.4-runtime
-          tags: plucio/opencv:2.4.13.7.3-bullseye-runtime,plucio/opencv:2.4.13-bullseye-runtime,plucio/opencv:2.4-bullseye-runtime
+          tags: plucio/opencv:2.4.13.7.3-jammy-runtime,plucio/opencv:2.4.13-jammy-runtime,plucio/opencv:2.4-jammy-runtime
           platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
